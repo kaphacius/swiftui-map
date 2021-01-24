@@ -20,6 +20,8 @@
 		8256225B25BD616B0033A9EE /* VenueExploreResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8256225A25BD616B0033A9EE /* VenueExploreResponse.swift */; };
 		8256227825BD62CE0033A9EE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8256227725BD62CE0033A9EE /* MapView.swift */; };
 		8256228025BD637F0033A9EE /* MapVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8256227F25BD637F0033A9EE /* MapVM.swift */; };
+		8256228E25BD85800033A9EE /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8256228D25BD85800033A9EE /* Images.swift */; };
+		8256229325BD8F790033A9EE /* VenueAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8256229225BD8F790033A9EE /* VenueAnnotation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		8256225A25BD616B0033A9EE /* VenueExploreResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueExploreResponse.swift; sourceTree = "<group>"; };
 		8256227725BD62CE0033A9EE /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		8256227F25BD637F0033A9EE /* MapVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
+		8256228D25BD85800033A9EE /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		8256229225BD8F790033A9EE /* VenueAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueAnnotation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,7 @@
 			children = (
 				8256224C25BD5C0F0033A9EE /* Resources */,
 				8256223725BD5B760033A9EE /* Network.swift */,
+				8256228D25BD85800033A9EE /* Images.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -187,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				8256227725BD62CE0033A9EE /* MapView.swift */,
+				8256229225BD8F790033A9EE /* VenueAnnotation.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -323,10 +329,12 @@
 				8256224E25BD5C550033A9EE /* FSResponse.swift in Sources */,
 				8256224825BD5BF10033A9EE /* VenueExploreResource.swift in Sources */,
 				8256225625BD5C6E0033A9EE /* Venue.swift in Sources */,
+				8256229325BD8F790033A9EE /* VenueAnnotation.swift in Sources */,
 				8256224325BD5BB10033A9EE /* Resource.swift in Sources */,
 				8256228025BD637F0033A9EE /* MapVM.swift in Sources */,
 				8256220825BD5B4D0033A9EE /* SwiftUI_MapApp.swift in Sources */,
 				8256225B25BD616B0033A9EE /* VenueExploreResponse.swift in Sources */,
+				8256228E25BD85800033A9EE /* Images.swift in Sources */,
 				8256227825BD62CE0033A9EE /* MapView.swift in Sources */,
 				8256223825BD5B760033A9EE /* Network.swift in Sources */,
 			);

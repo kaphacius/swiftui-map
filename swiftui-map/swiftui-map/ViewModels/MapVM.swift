@@ -14,11 +14,13 @@ struct VenueAnnotationVM: Identifiable {
     let id: String
     let name: String
     let loc: CLLocationCoordinate2D
+    let image: UIImage
 
-    init(venue: Venue) {
+    init(venue: Venue, image: UIImage) {
         self.id = venue.id
         self.name = venue.name
         self.loc = CLLocationCoordinate2D(latitude: venue.lat, longitude: venue.lon)
+        self.image = image
     }
 }
 
@@ -28,19 +30,26 @@ class MapVM: NSObject, ObservableObject {
     @Published var radius: Int = 200
     @Published var showingAlert: Bool = false
     @Published var errorMessage: String = String()
+    @Published var showingSheet: Bool = false
+    @Published var selectedAnnotation: VenueAnnotationVM? = nil
 
+    private let queue = DispatchQueue(label: "queue", qos: .userInitiated)
     private let lm = CLLocationManager()
     private let network: Network
+    private let images: Images
     private let statusSubject = PassthroughSubject<CLAuthorizationStatus, Never>()
     private let locationSubject = PassthroughSubject<CLLocationCoordinate2D, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
     private var cancellables = Set<AnyCancellable>()
+    private var waitingVenues: Array<Venue> = []
 
-    init(network: Network) {
+    init(network: Network, images: Images) {
         self.network = network
+        self.images = images
         super.init()
 
         setUpErrors()
+        setUpImages()
         setUpLocation()
     }
 
@@ -51,9 +60,16 @@ class MapVM: NSObject, ObservableObject {
             .store(in: &cancellables)
     }
 
+    private func setUpImages() {
+        images.imageLoadSubject
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] in self?.categoryImageLoaded($0) })
+            .store(in: &cancellables)
+    }
+
     private func setUpLocation() {
         statusSubject
-            .receive(on: DispatchQueue.global())
+            .receive(on: queue)
             .removeDuplicates()
             .sink(receiveValue: { [weak self] status in
                 self?.locAuthStatusChanged(status)
@@ -86,7 +102,8 @@ class MapVM: NSObject, ObservableObject {
 
         network
             .load(resource: r)
-            .receive(on: DispatchQueue.global())
+            .subscribe(on: queue)
+            .receive(on: queue)
             .map({ (r: NResult<FSResponse<VenueExploreResponse>>) -> NResult<[Venue]> in
                 if let items = try? r.map(\.response.groups.first).get().map(\.items)  {
                     return .success(items.map(\.venue))
@@ -95,7 +112,7 @@ class MapVM: NSObject, ObservableObject {
                 }
             })
             .map({ (r: NResult<[Venue]>) -> NResult<[VenueAnnotationVM]> in
-                r.map({ $0.map(VenueAnnotationVM.init) })
+                r.map({ self.convertModelsToVMs(models: $0) })
             })
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
@@ -103,16 +120,29 @@ class MapVM: NSObject, ObservableObject {
             }).store(in: &cancellables)
     }
 
+    private func convertModelsToVMs(models: [Venue]) -> [VenueAnnotationVM] {
+        models.compactMap({ model in
+            if let img = images.getImage(for: model.category) {
+                return VenueAnnotationVM(venue: model, image: img)
+            } else {
+                waitingVenues.append(model)
+                return nil
+            }
+        })
+    }
+
     private func venuesLoaded(_ result: NResult<[VenueAnnotationVM]>) {
         switch result {
         case .success(let new):
-            venues = new
+            venues.removeAll()
+            DispatchQueue.main.async { self.venues = new }
         case .failure(let error):
             errorSubject.send(error)
         }
     }
 
     private func userLocationUpdated(_ loc: CLLocationCoordinate2D) {
+        waitingVenues.removeAll()
         loadVenues(location: loc)
 
         mapRegion = MKCoordinateRegion(
@@ -140,6 +170,14 @@ class MapVM: NSObject, ObservableObject {
     private func handleError(error: Error) {
         errorMessage = error.localizedDescription
         showingAlert = true
+    }
+
+    private func categoryImageLoaded(_ result: (id: String, img: UIImage)) {
+        venues.append(
+            contentsOf: waitingVenues
+                .filter({ $0.category.id == result.id })
+                .map({ VenueAnnotationVM(venue: $0, image: result.img) })
+        )
     }
 }
 

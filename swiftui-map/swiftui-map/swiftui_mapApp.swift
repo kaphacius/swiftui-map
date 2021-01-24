@@ -27,9 +27,11 @@ struct SwiftUI_MapApp: App {
         )
     }()
 
+    let images = Images()
+
     var body: some Scene {
         WindowGroup {
-            MapView(vm: MapVM(network: network))
+            MapView(vm: MapVM(network: network, images: images))
         }
     }
 }
