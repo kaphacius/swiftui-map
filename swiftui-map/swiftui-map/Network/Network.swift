@@ -8,10 +8,18 @@
 import Foundation
 import Combine
 
-enum NError: Error {
+enum NError: Error, LocalizedError {
     case URLError(Error)
     case parsingError
     case urlBuildFailed
+
+    var errorDescription: String? {
+        switch self {
+        case .parsingError: return "Internal error: Failed to parse received data"
+        case .urlBuildFailed: return "Internal error: Failed to construct remote URL"
+        case .URLError(let e): return "Internal error: \(e.localizedDescription)"
+        }
+    }
 }
 
 typealias NResult<T> = Result<T, Error>

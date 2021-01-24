@@ -37,7 +37,13 @@ struct MapView: View {
             .padding(10.0)
             .padding(.bottom, 20.0),
             alignment: .bottom
-        )
+        ).alert(isPresented: $vm.showingAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(vm.errorMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 
     var sliderBinding: Binding<Double> {
