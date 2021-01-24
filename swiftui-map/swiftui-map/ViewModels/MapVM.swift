@@ -15,12 +15,16 @@ struct VenueAnnotationVM: Identifiable {
     let name: String
     let loc: CLLocationCoordinate2D
     let image: UIImage
+    let address: [String]
+    let categoryName: String
 
     init(venue: Venue, image: UIImage) {
         self.id = venue.id
         self.name = venue.name
         self.loc = CLLocationCoordinate2D(latitude: venue.lat, longitude: venue.lon)
         self.image = image
+        self.categoryName = venue.category.pluralName
+        self.address = venue.formattedAddress
     }
 }
 
@@ -41,7 +45,7 @@ class MapVM: NSObject, ObservableObject {
     private let locationSubject = PassthroughSubject<CLLocationCoordinate2D, Never>()
     private let errorSubject = PassthroughSubject<Error, Never>()
     private var cancellables = Set<AnyCancellable>()
-    private var waitingVenues: Array<Venue> = []
+    private var waitingVenues: Set<Venue> = []
 
     init(network: Network, images: Images) {
         self.network = network
@@ -125,7 +129,7 @@ class MapVM: NSObject, ObservableObject {
             if let img = images.getImage(for: model.category) {
                 return VenueAnnotationVM(venue: model, image: img)
             } else {
-                waitingVenues.append(model)
+                waitingVenues.insert(model)
                 return nil
             }
         })

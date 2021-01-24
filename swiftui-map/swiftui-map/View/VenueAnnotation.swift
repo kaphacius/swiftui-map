@@ -34,6 +34,8 @@ extension VenueAnnotationVM {
         self.loc = CLLocationCoordinate2D()
         self.name = "Bar"
         self.image = UIImage(systemName: "leaf.fill")!
+        self.categoryName = "Parks"
+        self.address = ["First line", "Second line", "Third line"]
     }
 }
 

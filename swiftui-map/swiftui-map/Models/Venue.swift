@@ -50,6 +50,12 @@ struct Venue: Decodable {
     }
 }
 
+extension Venue: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
 extension Venue {
     struct Category: Decodable, Hashable {
         enum CodingKeys: String, CodingKey {

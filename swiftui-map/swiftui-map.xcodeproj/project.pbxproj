@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		823AAA6025BD9E0C00D96CD4 /* VenueDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823AAA5F25BD9E0C00D96CD4 /* VenueDetailsView.swift */; };
 		8256220825BD5B4D0033A9EE /* SwiftUI_MapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8256220725BD5B4D0033A9EE /* SwiftUI_MapApp.swift */; };
 		8256220C25BD5B4E0033A9EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8256220B25BD5B4E0033A9EE /* Assets.xcassets */; };
 		8256220F25BD5B4E0033A9EE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8256220E25BD5B4E0033A9EE /* Preview Assets.xcassets */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		823AAA5F25BD9E0C00D96CD4 /* VenueDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueDetailsView.swift; sourceTree = "<group>"; };
 		8256220425BD5B4D0033A9EE /* SwiftUI-Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8256220725BD5B4D0033A9EE /* SwiftUI_MapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_MapApp.swift; sourceTree = "<group>"; };
 		8256220B25BD5B4E0033A9EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			children = (
 				8256227725BD62CE0033A9EE /* MapView.swift */,
 				8256229225BD8F790033A9EE /* VenueAnnotation.swift */,
+				823AAA5F25BD9E0C00D96CD4 /* VenueDetailsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				8256220825BD5B4D0033A9EE /* SwiftUI_MapApp.swift in Sources */,
 				8256225B25BD616B0033A9EE /* VenueExploreResponse.swift in Sources */,
 				8256228E25BD85800033A9EE /* Images.swift in Sources */,
+				823AAA6025BD9E0C00D96CD4 /* VenueDetailsView.swift in Sources */,
 				8256227825BD62CE0033A9EE /* MapView.swift in Sources */,
 				8256223825BD5B760033A9EE /* Network.swift in Sources */,
 			);
