@@ -1,4 +1,4 @@
-# swift-map
+# swiftui-map
 ### Experimenting with SwiftUI+Map
 
 ##### To run the project you need to obtain a `client_key` and `client_secret` for Foursquare API.
